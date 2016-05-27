@@ -129,9 +129,9 @@ function alertConfirmation( AppName, ButtonNum, Computername, CurrentUser, sCmd 
 		var userConfirm = confirm("You have selected to install: " + installPrograms.join(", ") + "\n\nYou have selected to autoupdate: " + updatePrograms.join(", ") + "\n\nPlease confirm your selections by clicking 'Okay' or click 'Cancel' to stop the process and reselect.");
 		if (userConfirm == true) {
 			RunApps( AppName, ButtonNum, Computername, CurrentUser, sCmd );		// This function executes your script.  Do not edit this line
-			setTimeout(function(){ location.reload();}, 4000);
-		} else {
 			location.reload();
+		} else {
+			
 		}
 	});
 }
@@ -305,7 +305,7 @@ function writeArguementsXML(ButtonNum){
 			$("#btn"+ ButtonNum + "_arguments input:checked").each(function (index, value) {
 				file.WriteLine('     <argument>');
 				file.WriteLine('          <program>'+ $(this).val() +'</program>');
-				file.WriteLine('          <' + $(this).attr("name") + '>Yes</' + $(this).attr("name") + '>');
+				file.WriteLine('          <action>'+ $(this).attr("name") +'</action>');
 				file.WriteLine('          <modtime>' + modTime + '</modtime>');
 				file.WriteLine('     </argument>');
 			});
@@ -347,17 +347,9 @@ $(document).ready(function() {
 									var defaultProgram = programTag[0].firstChild.nodeValue;
 									
 									try {
-										var installTag = argumentsDefault[i].getElementsByTagName("install");
-										var defaultInstall = installTag[0].firstChild.nodeValue;
-										$("input[type='checkbox'][name='install'][value='"+defaultProgram+"']").prop("checked",true);
-									}
-									catch(e){
-									
-									}
-									try {
-										var updateTag = argumentsDefault[i].getElementsByTagName("autoupdate");
-										var defaultUpdate = updateTag[0].firstChild.nodeValue;
-										$("input[type='checkbox'][name='autoupdate'][value='"+defaultProgram+"']").prop("checked",true);
+										var actionTag = argumentsDefault[i].getElementsByTagName("action");
+										var selectedAction = actionTag[0].firstChild.nodeValue;
+										$("input[type='checkbox'][name='"+selectedAction+"'][value='"+defaultProgram+"']").prop("checked",true);
 									}
 									catch(e){
 									
